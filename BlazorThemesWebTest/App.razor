@@ -1,0 +1,31 @@
+﻿@using BlazorThemes.Services
+@inject BlazorThemesService ThemeService
+
+<BlazorThemes.Components.BlazorThemesProvider Options="themeOptions" OnThemeChanged="HandleThemeChanged">
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</BlazorThemes.Components.BlazorThemesProvider>
+
+@code {
+    private ThemeOptions themeOptions = new()
+    {
+        Themes = ["light", "dark", "sepia" , "auto"],
+        CustomThemes = ["sepia"],
+        EnableScheduling = true,
+        ScheduleConfig = new() { LightStart = "06:00", DarkStart = "18:00" },
+        TransitionType = "fade",
+        TransitionDuration = 300
+    };
+
+    private void HandleThemeChanged(ThemeState state) => StateHasChanged();
+}

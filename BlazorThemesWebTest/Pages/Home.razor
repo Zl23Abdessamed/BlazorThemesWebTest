@@ -1,0 +1,197 @@
+﻿@page "/"
+@using BlazorThemes.Services
+@inject BlazorThemes.Services.BlazorThemesService ThemeService
+
+<div class="theme-showcase">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background-decoration"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <!-- Animated Logo -->
+                <div class="logo-container">
+                    <img src="/BlazorThemes.png" alt="BlazorThemes Logo" class="blazor-themes-logo" />
+                </div>
+
+                <h1 class="hero-title">
+                    BlazorThemes
+                </h1>
+
+                <p class="hero-subtitle">
+                    Elevate your Blazor applications with professional theme management
+                </p>
+
+                <!-- Theme Controls -->
+                <div class="theme-controls">
+                    <button @onclick="ToggleTheme" class="btn btn-primary">
+                        Toggle Theme
+                    </button>
+
+                    <button @onclick='() => SetTheme("light")' class="btn btn-light">
+                        Light Mode
+                    </button>
+
+                    <button @onclick='() => SetTheme("dark")' class="btn btn-dark">
+                        Dark Mode
+                    </button>
+
+                    <button @onclick="SetSystemTheme" class="btn btn-gradient">
+                        System Default
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Theme Management</h2>
+                <p class="section-subtitle">
+                    Everything you need for professional theme handling in your Blazor applications
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Theme Switching</h3>
+                    <p class="feature-description">
+                        Easily switch between light and dark themes with a simple API.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Smart Scheduling</h3>
+                    <p class="feature-description">
+                        Automatically switch themes based on time of day.
+                        Perfect for light/dark mode scheduling.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Custom Themes</h3>
+                    <p class="feature-description">
+                        Create and apply your own themes with custom CSS variables.
+                        Extend beyond standard light/dark modes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title">Experience the Magic</h2>
+                    <p class="section-subtitle">
+                        See how components adapt to different themes
+                    </p>
+                </div>
+
+                <!-- Demo Cards -->
+                <div class="demo-grid">
+                    <div class="demo-card">
+                        <div class="demo-card-header">
+                            <div class="demo-info">
+                                <h3 class="demo-title">User Profile</h3>
+                                <p class="demo-subtitle">Theme-aware component</p>
+                            </div>
+                            <div class="demo-avatar"></div>
+                        </div>
+
+                        <div class="demo-content">
+                            <div class="skeleton-line skeleton-line-lg"></div>
+                            <div class="skeleton-line skeleton-line-md"></div>
+                            <div class="skeleton-line skeleton-line-xl"></div>
+                        </div>
+
+                        <div class="demo-footer">
+                            <div class="user-item">
+                                <div class="user-avatar"></div>
+                                <div class="user-info">
+                                    <div class="user-name"></div>
+                                    <div class="user-role"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-card-header">
+                            <div class="demo-info">
+                                <h3 class="demo-title">Data Card</h3>
+                                <p class="demo-subtitle">Dynamic theming</p>
+                            </div>
+                            <div class="demo-percentage">64%</div>
+                        </div>
+
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span class="progress-badge">Progress</span>
+                                <span class="progress-value">64%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 64%"></div>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Items</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Tasks</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">7</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+</div>
+
+@code {
+    private async Task SetTheme(string theme)
+    {
+        await ThemeService.SetThemeAsync(theme);
+    }
+
+    private async Task SetSystemTheme()
+    {
+        await ThemeService.SetSystemThemeAsync();
+    }
+
+    private async Task ToggleTheme()
+    {
+        await ThemeService.ToggleThemeAsync();
+    }
+}

@@ -1,0 +1,438 @@
+﻿@page "/examples"
+@using Microsoft.AspNetCore.Components.Web
+@using BlazorThemes.Components
+@using BlazorThemes.Services
+@using System.Text.Json
+
+@inject BlazorThemesService ThemesService
+
+<PageTitle>BlazorThemes --Examples</PageTitle>
+
+    <div class="page-container">
+        <!-- Hero Header Section -->
+        <div class="header-section">
+            <div class="hgroup">
+                <div class="h1">Examples</div>
+                <div class="subtitle">Complete theme management system with real-time controls</div>
+            </div>
+
+            @if (providerInitialized)
+            {
+                <div class="details-panel" open>
+                    <div class="summary"><strong>Current Theme Status</strong></div>
+                    <div class="status-grid">
+                        <div class="status-label">Active Theme:</div>
+                        <div class="highlight">@ThemesService.State.ResolvedTheme</div>
+                        <div class="status-label">System Preference:</div>
+                        <div class="system-code">@ThemesService.State.SystemTheme</div>
+                        <div class="status-label">User Selection:</div>
+                        <div class="user-code">@ThemesService.State.Theme</div>
+                        @if (ThemesService.State.IsTransitioning)
+                        {
+                            <div class="status-label">Status:</div>
+                            <div class="transition-status">⚡ Transitioning...</div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="initializing">🔄 Initializing theme system...</div>
+            }
+        </div>
+
+        <!-- Main Control Panels -->
+        <div class="control-section">
+            <div class="section-title">🎛️ Theme Controls</div>
+
+            <!-- Primary Theme Selection -->
+            <div class="control-panel">
+                <div class="panel-header">
+                    <div class="panel-title">☀️🌙 Primary Themes</div>
+                </div>
+                <div class="field-group">
+                    <div class="legend">Choose your preferred theme</div>
+                    <div class="button-group">
+                        <button type="button" @onclick='() => SetTheme("light")' class="theme-button">
+                            <span>☀️</span>
+                            <span class="button-title">Light Mode</span>
+                            <span class="button-description">Clean and bright interface</span>
+                        </button>
+                        <button type="button" @onclick='() => SetTheme("dark")' class="theme-button">
+                            <span>🌙</span>
+                            <span class="button-title">Dark Mode</span>
+                            <span class="button-description">Easy on the eyes</span>
+                        </button>
+                        <button type="button" @onclick='() => SetTheme("auto")' class="theme-button">
+                            <span>🔄</span>
+                            <span class="button-title">Auto Mode</span>
+                            <span class="button-description">Follows system preference</span>
+                        </button>
+                        <button type="button" @onclick="ToggleTheme" class="theme-button">
+                            <span>🔀</span>
+                            <span class="button-title">Quick Toggle</span>
+                            <span class="button-description">Switch between light/dark</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transition Effects -->
+            <div class="control-panel">
+                <div class="panel-header">
+                    <div class="panel-title">✨ Transition Effects</div>
+                    <div class="panel-subtitle">Experience smooth theme transitions with visual flair</div>
+                </div>
+                <div class="field-group">
+                    <div class="legend">Apply theme with animation</div>
+                    <div class="button-group">
+                        <button type="button" @onclick="() => SetThemeWithTransition(ThemeTransitionType.Fade)" class="transition-button">
+                            <span>🌅</span>
+                            <span class="button-title">Fade Transition</span>
+                            <span class="button-description">Gentle cross-fade effect</span>
+                        </button>
+                        <button type="button" @onclick="() => SetThemeWithTransition(ThemeTransitionType.Slide)" class="transition-button">
+                            <span>📱</span>
+                            <span class="button-title">Slide Transition</span>
+                            <span class="button-description">Mobile-style slide animation</span>
+                        </button>
+                        <button type="button" @onclick="() => SetThemeWithTransition(ThemeTransitionType.Blur)" class="transition-button">
+                            <span>🌫️</span>
+                            <span class="button-title">Blur Transition</span>
+                            <span class="button-description">Sophisticated blur effect</span>
+                        </button>
+                        <button type="button" @onclick="HandleRippleClick" class="transition-button">
+                            <span>💧</span>
+                            <span class="button-title">Ripple Effect</span>
+                            <span class="button-description">Interactive ripple animation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Themes Section -->
+        <div class="custom-section">
+            <div class="section-title">🎨 Available Custom Themes</div>
+            <div class="control-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Use Custom Themes</div>
+                </div>
+
+                @if (ThemesService.State.CustomThemes.Any())
+                {
+                    <div class="custom-themes-panel" open>
+                        <div class="summary">
+                            <strong>Your Custom Themes (@ThemesService.State.CustomThemes.Count())</strong>
+                        </div>
+                        <div class="theme-list">
+                            @foreach (var theme in ThemesService.State.CustomThemes)
+                            {
+                                <div class="theme-item">
+                                    <button type="button" @onclick="() => SetTheme(theme)" class="custom-theme-button">
+                                        🎯 Apply <strong>@theme</strong>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="no-themes">No custom themes available.</div>
+                }
+            </div>
+        </div>
+
+        <!-- Scheduling Section -->
+        <div class="scheduling-section">
+            <div class="section-title">⏰ Automatic Theme Scheduling</div>
+            <div class="control-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Time-Based Theme Management</div>
+                    <div class="panel-subtitle">Automatically switch themes based on time of day</div>
+                </div>
+
+                <div class="field-group">
+                    <div class="legend">Schedule Configuration</div>
+                    <div class="schedule-toggle">
+                        <label class="toggle-label">
+                            <input type="checkbox" @bind="IsSchedulingEnabled" />
+                            <span class="toggle-text">
+                                <strong>Enable automatic theme scheduling</strong>
+                                <small>Themes will change automatically at specified times</small>
+                            </span>
+                        </label>
+                    </div>
+
+                    @if (IsSchedulingEnabled)
+                    {
+                        <div class="time-settings" open>
+                            <div class="time-settings-header">Time Settings</div>
+                            <div class="time-inputs">
+                                <label class="time-label">
+                                    <span>☀️ Light Theme Start Time:</span>
+                                    <input type="time" @bind="LightStartTime" />
+                                    <small>When to switch to light mode</small>
+                                </label>
+                                <label class="time-label">
+                                    <span>🌙 Dark Theme Start Time:</span>
+                                    <input type="time" @bind="DarkStartTime" />
+                                    <small>When to switch to dark mode</small>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Controls -->
+        <div class="advanced-section">
+            <div class="section-title">🔧 Advanced Theme Management</div>
+            <div class="control-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Power User Tools</div>
+                </div>
+
+                <div class="field-group">
+                    <div class="legend">Advanced Operations</div>
+                    <div class="advanced-buttons">
+                        <button type="button" @onclick='() => ForceTheme("dark")' class="advanced-button">
+                            <span>🔒</span>
+                            <span class="button-title">Force Dark Theme</span>
+                            <span class="button-description">Override all settings</span>
+                        </button>
+                        <button type="button" @onclick="ClearForcedTheme" class="advanced-button">
+                            <span>🔓</span>
+                            <span class="button-title">Clear Forced Theme</span>
+                            <span class="button-description">Restore normal behavior</span>
+                        </button>
+                        <button type="button" @onclick="CycleTheme" class="advanced-button">
+                            <span>🔄</span>
+                            <span class="button-title">Cycle All Themes</span>
+                            <span class="button-description">Rotate through available options</span>
+                        </button>
+                        <button type="button" @onclick="RefreshState" class="advanced-button">
+                            <span>🔄</span>
+                            <span class="button-title">Refresh System</span>
+                            <span class="button-description">Reload theme state</span>
+                        </button>
+                    </div>
+                </div>
+
+                @if (providerInitialized)
+                {
+                    <div class="system-info">
+                        <div class="info-header">
+                            <strong>System Information</strong>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-label">Available Themes:</div>
+                            <div class="info-value">@string.Join(", ", ThemesService.State.Themes)</div>
+                            <div class="info-label">Forced Theme:</div>
+                            <div class="info-value">@(ThemesService.State.ForcedTheme ?? "None")</div>
+                            <div class="info-label">Transition Type:</div>
+                            <div class="info-value">@ThemesService.State.TransitionType</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="log-section">
+            <div class="section-title">📋 Activity Log</div>
+            <div class="log-panel" open>
+                <div class="log-header">
+                    <strong>Recent Events (@eventLog.Count)</strong>
+                </div>
+                <div class="log-container">
+                    @if (eventLog.Any())
+                    {
+                        @foreach (var log in eventLog.TakeLast(50).Reverse())
+                        {
+                            <div class="log-entry" style="color: @log.Color;">
+                                <span class="log-time">[@log.Time.ToString("HH:mm:ss.fff")]</span>
+                                <span class="log-message">@log.Message</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-log">No events logged yet. Start using the theme controls!</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+@code {
+    private bool providerInitialized = false;
+
+    // Initial, static options for the provider.
+    private ThemeOptions themeOptions = new ThemeOptions
+    {
+        Themes = new[] { "light", "dark", "auto" },
+        CustomThemes = new[] { "sepia" }, // Let's pre-define one
+        StorageKey = "blazor-theme-test-fixed",
+        EnableSystem = true,
+        EnableColorScheme = true,
+        DisableTransitionOnChange = false,
+        TransitionDuration = 300,
+        TransitionType = "fade"
+    };
+
+    // --- Logging ---
+    private List<LogEntry> eventLog = new();
+    private class LogEntry
+    {
+        public DateTime Time { get; set; } = DateTime.Now;
+        public string Message { get; set; } = "";
+        public string Color { get; set; } = "black";
+    }
+
+    private void LogEvent(string message, string color = "black")
+    {
+        Console.WriteLine($"LOG: {message}");
+        eventLog.Add(new LogEntry { Message = message, Color = color });
+        StateHasChanged();
+    }
+
+    // --- State Properties (The Correct Way) ---
+    // These properties act as a bridge between the UI and the Service.
+    // The 'get' reads from the service's state.
+    // The 'set' calls a method on the service to change the state.
+
+    private bool IsSchedulingEnabled
+    {
+        get => ThemesService?.State.SchedulingEnabled ?? false;
+        set
+        {
+            if (ThemesService != null && ThemesService.State.SchedulingEnabled != value)
+            {
+                LogEvent($"UI wants to set scheduling to: {value}", "blue");
+                _ = ThemesService.EnableSchedulingAsync(value);
+            }
+        }
+    }
+
+    private DateTime LightStartTime
+    {
+        get => DateTime.TryParse(ThemesService?.State.ScheduleConfig.LightStart, out var time) ? DateTime.Today.Add(time.TimeOfDay) : DateTime.Today;
+        set
+        {
+            if (ThemesService != null)
+            {
+                var timeString = value.ToString("HH:mm");
+                if (ThemesService.State.ScheduleConfig.LightStart != timeString)
+                {
+                    LogEvent($"UI wants to set light start time to: {timeString}", "blue");
+                    _ = ThemesService.SetScheduleAsync(timeString, ThemesService.State.ScheduleConfig.DarkStart);
+                }
+            }
+        }
+    }
+
+    private DateTime DarkStartTime
+    {
+        get => DateTime.TryParse(ThemesService?.State.ScheduleConfig.DarkStart, out var time) ? DateTime.Today.Add(time.TimeOfDay) : DateTime.Today;
+        set
+        {
+            if (ThemesService != null)
+            {
+                var timeString = value.ToString("HH:mm");
+                if (ThemesService.State.ScheduleConfig.DarkStart != timeString)
+                {
+                    LogEvent($"UI wants to set dark start time to: {timeString}", "blue");
+                    _ = ThemesService.SetScheduleAsync(ThemesService.State.ScheduleConfig.LightStart, timeString);
+                }
+            }
+        }
+    }
+
+    // --- Button Click Handlers ---
+
+    private async Task SetTheme(string theme)
+    {
+        LogEvent($"Attempting to set theme to '{theme}'...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.SetThemeAsync(theme);
+    }
+
+    private async Task ToggleTheme()
+    {
+        LogEvent("Attempting to toggle theme...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.ToggleThemeAsync();
+    }
+
+    private async Task SetThemeWithTransition(ThemeTransitionType transitionType)
+    {
+        LogEvent($"Attempting to toggle theme with transition: {transitionType}...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.ToggleThemeWithTransitionAsync(transitionType);
+    }
+
+    private async Task HandleRippleClick(MouseEventArgs e)
+    {
+        LogEvent($"Attempting ripple click at ({e.ClientX}, {e.ClientY})...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        var newTheme = ThemesService.ResolvedTheme == "light" ? "dark" : "light";
+        await ThemesService.SetThemeWithRippleAsync(newTheme, e.ClientX, e.ClientY);
+    }
+
+    private async Task ForceTheme(string theme)
+    {
+        LogEvent($"Attempting to force theme: '{theme}'...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.ForceThemeAsync(theme);
+    }
+
+    private async Task ClearForcedTheme()
+    {
+        LogEvent("Attempting to clear forced theme...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.ClearForcedThemeAsync();
+    }
+
+    private async Task CycleTheme()
+    {
+        LogEvent("Attempting to cycle theme...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.CycleThemeAsync();
+    }
+
+    private async Task RefreshState()
+    {
+        LogEvent("Attempting to refresh state...");
+        if (ThemesService == null) { LogEvent("Service is NULL!", "red"); return; }
+        await ThemesService.RefreshStateAsync();
+    }
+
+    // --- Event Callbacks from the Provider ---
+
+    private void OnInitializedHandler()
+    {
+        providerInitialized = true;
+        LogEvent("✅ Event: Provider Initialized!", "green");
+        StateHasChanged();
+    }
+
+    private void OnThemeChangedHandler(ThemeState state)
+    {
+        var stateJson = JsonSerializer.Serialize(state);
+        LogEvent($"🎨 Event: Theme Changed! New state: {stateJson}", "purple");
+        StateHasChanged(); // Essential to re-render the UI with new state
+    }
+
+    private void OnSystemThemeChangedHandler(string systemTheme)
+    {
+        LogEvent($"💻 Event: System Theme Changed to '{systemTheme}'!", "teal");
+    }
+
+    private void OnTransitionStateChangedHandler(bool isTransitioning)
+    {
+        LogEvent($"✨ Event: IsTransitioning state is now {isTransitioning}", "darkgoldenrod");
+    }
+}
