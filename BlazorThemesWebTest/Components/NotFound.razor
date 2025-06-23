@@ -1,16 +1,54 @@
-﻿@page "/notfound"
-@layout MainLayout
+﻿@inject NavigationManager Navigation
 
-<div class="not-found-container">
-    <div class="not-found-content">
-        <div class="not-found-icon">🔍</div>
-        <h1 class="not-found-title">404 - Page Not Found</h1>
-        <p class="not-found-message">
-            Oops! The page you're looking for doesn't exist or has been moved.
-        </p>
-        <a href="/" class="not-found-button">
-            <span class="button-icon">🏠</span>
-            <span class="button-text">Return Home</span>
-        </a>
+<div class="notfound-container">
+    <div class="notfound-background-decoration"></div>
+    <div class="container">
+        <div class="notfound-content">
+            <div class="notfound-icon">
+                <div class="error-number">404</div>
+                <div class="error-decoration"></div>
+            </div>
+            <div class="notfound-text">
+                <h1 class="notfound-title">Oops! Page Not Found</h1>
+                <p class="notfound-subtitle">The page you're looking for doesn't exist or has been moved.</p>
+            </div>
+            <div class="notfound-actions">
+                <button class="btn btn-primary" @onclick="GoHome">
+                    <span class="btn-text">Go Home</span>
+                </button>
+                <button class="btn btn-outline" @onclick="GoBack">
+                    <span class="btn-text">Go Back</span>
+                </button>
+            </div>
+            <div class="search-suggestions">
+                <h4 class="suggestions-title">Popular Pages</h4>
+                <div class="suggestions-grid">
+                    <a href="/" class="suggestion-card">
+                        <span class="suggestion-title">Home</span>
+                        <span class="suggestion-description">Return to homepage</span>
+                    </a>
+                    <a href="/about" class="suggestion-card">
+                        <span class="suggestion-title">About</span>
+                        <span class="suggestion-description">Learn more about us</span>
+                    </a>
+                    <a href="/contact" class="suggestion-card">
+                        <span class="suggestion-title">Contact</span>
+                        <span class="suggestion-description">Get in touch</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@code {
+    private void GoHome()
+    {
+        Navigation.NavigateTo("/BlazorThemesWebTest");
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/BlazorThemesWebTest", replace: true);
+    }
+}

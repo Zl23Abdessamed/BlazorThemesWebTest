@@ -3317,3 +3317,443 @@ pre {
     background: var(--bg-elevated);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+
+
+/* ============================================
+   LOADING COMPONENT STYLES
+   ============================================ */
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+}
+
+.loading-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.loading-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.loading-logo {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.loading-spinner {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.spinner-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+    .spinner-ring:nth-child(1) {
+        border-top-color: var(--accent-primary);
+        animation-delay: 0s;
+    }
+
+    .spinner-ring:nth-child(2) {
+        border-right-color: var(--accent-secondary);
+        animation-delay: -0.5s;
+        transform: scale(0.8);
+    }
+
+    .spinner-ring:nth-child(3) {
+        border-bottom-color: var(--accent-success);
+        animation-delay: -1s;
+        transform: scale(0.6);
+    }
+
+.loading-text {
+    margin-bottom: 2rem;
+}
+
+.loading-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.loading-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.loading-progress {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 2px;
+    animation: progressFlow 2s ease-in-out infinite;
+    width: 40%;
+}
+
+/* ============================================
+   NOT FOUND 404 COMPONENT STYLES
+   ============================================ */
+
+.notfound-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+.notfound-background-decoration {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(135deg, var(--accent-primary-alpha) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 12s ease-in-out infinite;
+    transform: rotate(15deg);
+}
+
+.notfound-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.notfound-icon {
+    position: relative;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-number {
+    font-size: clamp(8rem, 15vw, 12rem);
+    font-weight: 900;
+    color: var(--text-primary);
+    opacity: 0.1;
+    position: relative;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.error-decoration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    animation: pulseScale 3s ease-in-out infinite;
+}
+
+.notfound-text {
+    margin-bottom: 3rem;
+}
+
+.notfound-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.notfound-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.notfound-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    position: relative;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    user-select: none;
+}
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-xl);
+    }
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+    .btn-outline:hover {
+        background: var(--accent-primary-alpha);
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        transform: translateY(-2px);
+    }
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+}
+
+.search-suggestions {
+    text-align: left;
+    background: var(--bg-elevated);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.suggestions-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.suggestions-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.suggestion-card {
+    display: block;
+    padding: 1rem 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-light);
+}
+
+    .suggestion-card:hover {
+        background: var(--accent-primary-alpha);
+        border-color: var(--accent-primary);
+        transform: translateX(5px);
+    }
+
+.suggestion-title {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.suggestion-description {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes progressFlow {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(300%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: rotate(15deg) translateY(0px);
+    }
+
+    50% {
+        transform: rotate(15deg) translateY(-20px);
+    }
+}
+
+@keyframes pulseScale {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .loading-content {
+        padding: 1rem;
+    }
+
+    .loading-spinner {
+        width: 60px;
+        height: 60px;
+    }
+
+    .notfound-content {
+        padding: 1rem;
+    }
+
+    .notfound-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .suggestions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-number {
+        font-size: 6rem;
+    }
+
+    .error-decoration {
+        width: 60px;
+        height: 60px;
+    }
+}
