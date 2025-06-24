@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorThemesWebTest",
   "resources": {
-    "hash": "sha256-FTP+eV8o+ORNP9+oXdUik55qPXPZq00wAWpJwWtHsp8=",
+    "hash": "sha256-mRPdzypOiUfkCPsLMT+rOpAtPK5I7jvl/xhOnDyu6Bw=",
     "fingerprinting": {
       "BlazorThemes.q2e2ibrdjk.wasm": "BlazorThemes.wasm",
       "Microsoft.AspNetCore.Authorization.phaa9r44xv.wasm": "Microsoft.AspNetCore.Authorization.wasm",
@@ -195,7 +195,7 @@
       "mscorlib.brg9pkj3je.wasm": "mscorlib.wasm",
       "netstandard.wuzd3f1y6v.wasm": "netstandard.wasm",
       "System.Private.CoreLib.05ksnw82w3.wasm": "System.Private.CoreLib.wasm",
-      "BlazorThemesWebTest.yxeugai83w.wasm": "BlazorThemesWebTest.wasm",
+      "BlazorThemesWebTest.8vbajap4d3.wasm": "BlazorThemesWebTest.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.rtblh4npr3.js": "dotnet.native.js",
       "dotnet.native.aqhezbunpl.wasm": "dotnet.native.wasm",
@@ -413,7 +413,7 @@
       "WindowsBase.u25hol0de4.wasm": "sha256-CgB28KCiYKHd4yK6IM0PJ526P7IbRCpNkGTqn+cLwxs=",
       "mscorlib.brg9pkj3je.wasm": "sha256-FzZwzxUYYyg3qxc7Km8r50UKAmRWrIeckSFG1NTHKNU=",
       "netstandard.wuzd3f1y6v.wasm": "sha256-yAXc0deBIRkWTVXqADZfhgZtrxGgJCIbZYVtA0NjvdM=",
-      "BlazorThemesWebTest.yxeugai83w.wasm": "sha256-2sCha9bHk0C0f4R933JFTRjcCwzXy4dlyrvx2gur2AI="
+      "BlazorThemesWebTest.8vbajap4d3.wasm": "sha256-lEVjf9R7T7oV0Iw09/gWN+eqAYy0v/lCPplcIfkMYL8="
     }
   },
   "debugLevel": 0,
