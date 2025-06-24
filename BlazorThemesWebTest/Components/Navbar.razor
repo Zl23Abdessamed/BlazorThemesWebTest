@@ -4,14 +4,12 @@
 <nav class="navbar">
     <div class="container">
         <div class="navbar-content">
-            <!-- Logo Section -->
             <div class="navbar-brand">
                 <a href="/BlazorThemesWebTest" class="brand-link">
                     <span class="brand-text">BlazorThemes</span>
                 </a>
             </div>
 
-            <!-- Navigation Links -->
             <div class="navbar-nav">
                 <a href="/BlazorThemesWebTest" class="nav-link @(IsActive("/") ? "active" : "")">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +43,6 @@
                 </a>
             </div>
 
-            <!-- Theme Toggle -->
             <div class="navbar-actions">
                 <button @onclick="ToggleTheme" class="theme-toggle" title="Toggle Theme">
                     <svg class="theme-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +53,6 @@
                     </svg>
                 </button>
 
-                <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -65,7 +61,6 @@
             </div>
         </div>
 
-        <!-- Mobile Navigation -->
         <div class="mobile-nav @(isMobileMenuOpen ? "open" : "")">
             <a href="/" class="mobile-nav-link @(IsActive("/") ? "active" : "")" @onclick="CloseMobileMenu">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,8 +106,6 @@
 
     private bool IsActive(string path)
     {
-        // You can implement proper route matching logic here
-        // For now, this is a simple implementation
-        return false; // Replace with actual route matching
+        return false;
     }
 }

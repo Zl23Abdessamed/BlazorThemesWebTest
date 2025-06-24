@@ -274,7 +274,7 @@
     private ThemeOptions themeOptions = new ThemeOptions
     {
         Themes = new[] { "light", "dark", "auto" },
-        CustomThemes = new[] { "sepia" }, // Let's pre-define one
+        CustomThemes = new[] { "sepia" },
         StorageKey = "blazor-theme-test-fixed",
         EnableSystem = true,
         EnableColorScheme = true,
@@ -299,7 +299,7 @@
         StateHasChanged();
     }
 
-    // --- State Properties (The Correct Way) ---
+    // --- State Properties ---
     // These properties act as a bridge between the UI and the Service.
     // The 'get' reads from the service's state.
     // The 'set' calls a method on the service to change the state.
